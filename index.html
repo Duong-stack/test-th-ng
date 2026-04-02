@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test bí mật 😏</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  text-align: center;
+  background: #111;
+  color: white;
+}
+
+.container {
+  padding: 20px;
+}
+
+h1 {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+img {
+  width: 80%;
+  max-width: 350px;
+  border-radius: 15px;
+  transition: opacity 0.3s;
+}
+
+.buttons {
+  margin-top: 25px;
+}
+
+button {
+  padding: 15px 25px;
+  font-size: 18px;
+  margin: 10px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+#yesBtn {
+  background: #4caf50;
+  color: white;
+}
+
+#noBtn {
+  background: #ff4d6d;
+  color: white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1 id="question">Bạn có chắc mình 100% thẳng không? 😏</h1>
+
+  <!-- GIF đầu -->
+  <img id="gif" src="https://media.giphy.com/media/l0HlBO7eyXzSZkJri/giphy.gif">
+
+  <div class="buttons">
+    <button id="yesBtn">Đúng 😇</button>
+    <button id="noBtn">Không 😏</button>
+  </div>
+</div>
+
+<!-- CHỈ CÓ ÂM THANH NO -->
+<audio id="noSound" src="no.mp3"></audio>
+
+<script>
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const gif = document.getElementById("gif");
+const question = document.getElementById("question");
+const noSound = document.getElementById("noSound");
+
+let count = 0;
+
+// click "Đúng"
+yesBtn.onclick = () => {
+  count++;
+
+  // YES nhỏ dần
+  let scale = 1 - count * 0.1;
+  yesBtn.style.transform = `scale(${scale})`;
+
+  // NO to dần
+  let grow = 1 + count * 0.2;
+  noBtn.style.transform = `scale(${grow})`;
+
+  // đổi câu text
+  question.innerText = "Suy nghĩ kỹ lại đi 😏";
+
+  // nếu quá nhỏ thì ẩn luôn
+  if (scale <= 0.3) {
+    yesBtn.style.display = "none";
+  }
+};
+
+// click "Không"
+noBtn.onclick = () => {
+  noSound.currentTime = 0;
+  noSound.play();
+
+  // đổi sang gif cuối
+  gif.style.opacity = 0;
+
+  setTimeout(() => {
+    gif.src = "https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif";
+    gif.style.opacity = 1;
+  }, 200);
+
+  question.innerText = "Mình biết mà 😏";
+
+  // ẩn nút
+  yesBtn.style.display = "none";
+  noBtn.style.display = "none";
+};
+</script>
+
+</body>
+</html>
