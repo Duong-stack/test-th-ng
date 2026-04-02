@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
@@ -6,52 +6,90 @@
 <title>Test bí mật 😏</title>
 
 <style>
+/* BACKGROUND */
 body {
   margin: 0;
   font-family: Arial;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: linear-gradient(135deg, #ff4d6d, #6a5acd, #00c9ff);
+  background-size: 300% 300%;
+  animation: gradientMove 8s ease infinite;
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* BOX */
+.container {
+  width: 90%;
+  max-width: 420px;
+  padding: 25px;
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(15px);
+
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+
   text-align: center;
-  background: #111;
   color: white;
 }
 
-.container {
-  padding: 20px;
-}
-
+/* TEXT */
 h1 {
-  font-size: 28px;
+  font-size: 26px;
   margin-bottom: 20px;
 }
 
+/* GIF */
 img {
-  width: 80%;
-  max-width: 350px;
+  width: 100%;
+  max-width: 320px;
   border-radius: 15px;
   transition: opacity 0.3s;
+  margin-bottom: 20px;
 }
 
+/* BUTTONS */
 .buttons {
-  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
 }
 
 button {
-  padding: 15px 25px;
+  flex: 1;
+  padding: 15px;
   font-size: 18px;
-  margin: 10px;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: all 0.2s;
 }
 
+/* YES nhỏ dần */
 #yesBtn {
-  background: #4caf50;
-  color: white;
+  background: rgba(255,255,255,0.8);
+  color: black;
 }
 
+/* NO to dần */
 #noBtn {
   background: #ff4d6d;
   color: white;
+  box-shadow: 0 5px 15px rgba(255,77,109,0.5);
+}
+
+/* Hover nhẹ */
+button:hover {
+  transform: scale(1.05);
 }
 </style>
 </head>
@@ -70,7 +108,7 @@ button {
   </div>
 </div>
 
-<!-- CHỈ CÓ ÂM THANH NO -->
+<!-- CHỈ SOUND NO -->
 <audio id="noSound" src="no.mp3"></audio>
 
 <script>
@@ -82,33 +120,28 @@ const noSound = document.getElementById("noSound");
 
 let count = 0;
 
-// click "Đúng"
+// YES
 yesBtn.onclick = () => {
   count++;
 
-  // YES nhỏ dần
   let scale = 1 - count * 0.1;
   yesBtn.style.transform = `scale(${scale})`;
 
-  // NO to dần
   let grow = 1 + count * 0.2;
   noBtn.style.transform = `scale(${grow})`;
 
-  // đổi câu text
   question.innerText = "Suy nghĩ kỹ lại đi 😏";
 
-  // nếu quá nhỏ thì ẩn luôn
   if (scale <= 0.3) {
     yesBtn.style.display = "none";
   }
 };
 
-// click "Không"
+// NO
 noBtn.onclick = () => {
   noSound.currentTime = 0;
   noSound.play();
 
-  // đổi sang gif cuối
   gif.style.opacity = 0;
 
   setTimeout(() => {
@@ -118,7 +151,6 @@ noBtn.onclick = () => {
 
   question.innerText = "Mình biết mà 😏";
 
-  // ẩn nút
   yesBtn.style.display = "none";
   noBtn.style.display = "none";
 };
